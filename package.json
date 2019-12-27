@@ -19,6 +19,10 @@
   "homepage": "https://github.com/Olli-Archives/piGrillRestService#readme",
   "dependencies": {
     "@types/node": "^13.1.1",
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "onoff": "^5.0.1",
+    "pi-gpio": "0.0.8"
   }
 }

@@ -1,28 +1,28 @@
-const Gpio = require("pi-gpio"); var gpioPin = 7;
+const Gpio = require('onoff').Gpio;
 
 class GpioDriver {
-
-  constructor() {
-    this.fan = new Gpio(25)
-    this.ignitor = new Gpio(8)
-    this.auger = new Gpio(7)
+  
+  constructor(){
+    this.grillGpio = new Gpio(25, 'out');
   }
 
-  pinStatus = (err, val) => {
-    if (val) {
-      console.log(val)
-    } else {
-      console.log(err)
-    }
-
-  }
-
-  ignitionControl() {
-    this.ignitor.writeSync(turnOn())
-    this.ignitor.read(this.pinStatus)
-  }
+grillOn(res){
+  this.grillGpio.writeSync(1);
+  res.send(`grill status: ${this.grillGpio.readSync()}`)
 }
 
-module.exports{
-  GpioDriver
+grillOff (res){
+  this.grillGpio.writeSync(0);
+  res.send(`grill status: ${this.grillGpio.readSync()}`)
 }
+
+smokeOn(res){
+  res.send('smoke status: smoke on')
+}
+
+smokeOff(){
+  res.send('smoke status: smoke off')
+}
+}
+
+module.exports = GpioDriver
