@@ -1,9 +1,9 @@
 const Gpio = require("pi-gpio"); var gpioPin = 7;
 
 class GpioDriver {
-  fan: any
-  ignitor: any
-  auger: any
+  fan
+  ignitor
+  auger
 
   constructor() {
     this.fan = new Gpio(25)

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express()
-const GpioDriver = require('./gpioDriver.ts')
+const GpioDriver = require('./gpioDriver.js')
 const grillContorls = new GpioDriver
 
 app.get('/', (req, res,)=>{
