@@ -1,6 +1,6 @@
 const Gpio = require("pi-gpio"); var gpioPin = 7;
 
-export default class GpioDriver {
+class GpioDriver {
   fan: any
   ignitor: any
   auger: any
@@ -24,6 +24,6 @@ export default class GpioDriver {
     this.ignitor.writeSync(turnOn())
     this.ignitor.read(this.pinStatus)
   }
-
-
 }
+
+module.exports.GpioDriver
