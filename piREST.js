@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express()
+const GpioDriver = require('./gpioDriver')
+const grillContorls = new GpioDriver
 
 app.get('/', (req, res,)=>{
   res.send(`Welcome to pi REST service.  go to path /cook to
@@ -8,8 +10,12 @@ app.get('/', (req, res,)=>{
 })
 
 app.post('/grill', (req, res)=>{
-  const request = req.body;
-  
+  console.log('grill endpoint hit')
+try{
+  this.grillContorls.ignitionControl()
+} catch(e) {
+  res.send(e)
+}
 })
 
 app.listen(3001, ()=>{
