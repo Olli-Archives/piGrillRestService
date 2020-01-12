@@ -20,7 +20,7 @@ smokeOn(res){
   res.send('smoke status: smoke on')
 }
 
-smokeOff(){
+smokeOff(res){
   res.send('smoke status: smoke off')
 }
 }
