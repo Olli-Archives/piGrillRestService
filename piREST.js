@@ -49,6 +49,16 @@ app.post('/grill-mode', (req, res)=>{
     }
 })
 
+app.post('/grill-temp', (req, res)=>{
+  if(req.body.temp){
+    try{
+      grillControls.setTemp(req.body.temp, res)
+    } catch(e){
+      res.send(`failed: ${e}`)
+    }
+  }
+})
+
 
 app.listen(3001, ()=>{
   console.log('listening on port 3001')

@@ -23,6 +23,9 @@ smokeOn(res){
 smokeOff(res){
   res.send('smoke status: smoke off')
 }
+setTemp(temp, res){
+  res.send(`setting temp to: ${temp}`)
+}
 }
 
 module.exports = GpioDriver
