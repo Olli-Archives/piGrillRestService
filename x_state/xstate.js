@@ -37,7 +37,8 @@ class StateService {
   })
 
   startService() {
-    this.machine = interpret(stateMachine)
+    // this.machine = interpret(stateMachine)
+    console.log('hi')
   }
 
   send(target) {
