@@ -34,7 +34,7 @@ class StateService {
 
   constructor({
     machine
-  });
+  })
 
   startService() {
     this.machine = interpret(stateMachine)
