@@ -36,11 +36,12 @@ class StateService {
  
 
   startService() {
-    this.machine = xstate.interpret(stateMachine)
+    this.machine = xstate.interpret(stateMachine);
+    this.machine.start();
   }
 
   send(target) {
-    this.machine.send(target)
+    this.machine.send(target);
   }
 
 }
