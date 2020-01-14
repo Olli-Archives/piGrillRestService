@@ -5,15 +5,9 @@ const stateMachine = xstate.Machine({
   states: {
     idle: {
       on:{
-        GRILL_ON: 'ignition'
-      }
-    },
-    ignition: { 
-      // add guard for ignited 
-      on: {
         SMOKE: 'smoke',
-        GRILL: 'grill',
-      } 
+        GRILL: 'grill'
+      }
     },
     smoke: {
       on: {
@@ -28,7 +22,6 @@ const stateMachine = xstate.Machine({
       }
     },
     shutdown: {
-
     }
   }
 })
