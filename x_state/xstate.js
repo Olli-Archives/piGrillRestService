@@ -35,11 +35,12 @@ class StateService {
   constructor({
     machine
   })
-  start(){
+
+  startService() {
     this.machine = interpret(stateMachine)
   }
 
-  send(target){
+  send(target) {
     this.machine.send(target)
   }
 }
