@@ -23,7 +23,7 @@ app.get('/', (req, res,)=>{
 app.post('/grill-state', (req, res)=>{
   if(req.body.state === "on"){
     try{
-      stateService.send('GRILL')
+      stateService.send('START')
       grillControls.grillOn(res)
     } catch(e){
       res.send(`failed: ${e}`)
