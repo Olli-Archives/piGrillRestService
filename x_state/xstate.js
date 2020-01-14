@@ -33,6 +33,8 @@ const stateMachine = xstate.Machine({
 class StateService { 
  machine;
 
+ 
+
   startService() {
     this.machine = interpret(stateMachine)
   }
@@ -40,7 +42,7 @@ class StateService {
   send(target) {
     this.machine.send(target)
   }
-  
+
 }
 
 module.exports = StateService;

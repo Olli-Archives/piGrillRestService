@@ -7,10 +7,10 @@ const grillControls = new GpioDriver();
 const  StateService  = require('./x_state/xstate');
 const stateService = new StateService();
 
+stateService.startService();
 console.log(stateService);
 
 stateService.machine.onTransition(state=>{console.log(state.value)});
-stateService.startService();
 
 
 app.use(cors())
