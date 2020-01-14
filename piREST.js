@@ -8,7 +8,7 @@ const grillControls = new GpioDriver();
 const { StateService } = require('./x_state/xstate');
 const stateService = new StateService('test');
 
-console.logp(stateService.present());
+console.log(stateService.present());
 
 // stateService.onTransition(state=>{console.log(state.value)});
 // console.log(stateService);
