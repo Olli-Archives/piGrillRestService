@@ -1,14 +1,16 @@
-const xstate = require('xstate')
+const xstate = require('xstate');
+
+const wait = require('./functions/shutdown');
+
+
 
 const grillMode = (context, event)=>{
-  console.log('context', context);
-
   return context.value === 'grill'
 }
 
 const stateMachine = xstate.Machine({
   context: {
-    mode: 'smoke'
+    mode: 'smoke',
   },
   initial: 'idle',
   states: {
@@ -40,13 +42,16 @@ const stateMachine = xstate.Machine({
     grill: {
       on: {
         SMOKE: 'smoke',
-        GRILL_OFF: 'shutdown'
+        GRILL_OFF:'shutdown' 
       }
     }, 
     shutdown: {
-      on: {
-        START: 'startGrill'
-      }
+ 
+      invoke: {
+       id: 'wait',
+        src: () => wait(8000),
+      onDone: 'idle'
+      },
     }
   }
 })
