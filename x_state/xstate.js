@@ -40,6 +40,7 @@ class StateService {
   send(target) {
     this.machine.send(target)
   }
+  
 }
 
 module.exports = StateService;
