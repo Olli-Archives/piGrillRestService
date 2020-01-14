@@ -20,8 +20,26 @@ const stateMachine = xstate.Machine({
         SMOKE: 'smoke',
         GRILL_OFF: 'shutdown'
       }
-    },
+    }, 
     shutdown: {
+      on: {
+        GRILL: 'grill',
+        SMOKE: 'smoke'
+      }
     }
   }
 })
+
+class StateService { 
+  machine;
+
+  start(){
+    this.machine = interpret(stateMachine)
+  }
+
+  send(target){
+    this.machine.send(target)
+  }
+}
+
+module.exports = StateService;

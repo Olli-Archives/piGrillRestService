@@ -1,9 +1,16 @@
 const express = require('express');
-const app = express()
-const GpioDriver = require('./gpioDriver.js')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const grillControls = new GpioDriver()
+const app = express();
+const GpioDriver = require('./gpioDriver.js');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const grillControls = new GpioDriver();
+
+const { StateService } = require('./x_state/xstate');
+const stateService = new StateService;
+
+stateService.onTransition(state=>{console.log(state.value)});
+stateService.start();
+
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -17,6 +24,7 @@ app.get('/', (req, res,)=>{
 app.post('/grill-state', (req, res)=>{
   if(req.body.state === "on"){
     try{
+      stateService.send('GRILL')
       grillControls.grillOn(res)
     } catch(e){
       res.send(`failed: ${e}`)
