@@ -24,15 +24,16 @@ app.post('/grill-state', (req, res)=>{
   if(req.body.state === "on"){
     try{
       stateService.send('START')
-      grillControls.grillOn(res)
+      res.sendStatus(200)
     } catch(e){
-      res.send(`failed: ${e}`)
+      res.send(`failed:`)
     }
   } else if(req.body.state === "off"){
     try{
-      grillControls.grillOff(res)
+      stateService.send('GRILL_OFF')
+      res.sendStatus(200)
     } catch(e){
-      res.send(`failed: ${e}`)
+      res.send(`failed:`)
     }
   } else {
     res.send('invalid request')
@@ -41,15 +42,18 @@ app.post('/grill-state', (req, res)=>{
 
 app.post('/grill-mode', (req, res)=>{
   if(req.body.smoke == "on"){
+    console.log('sending smoke')
     try{
-      grillControls.smokeOn(res)
+      stateService.send('SMOKE')
+      res.sendStatus(200)
     } catch(e){
-      res.send(`failed: ${e}`)
-      
+      res.send(`failed:`)
     }
     }else if( req.body.smoke == "off"){
+      console.log('sending grill')
       try{
-        grillControls.smokeOff(res)
+        stateService.send('GRILL')
+        res.sendStatus(200)
       } catch(e){
         res.send(`failed: ${e}`)
       }
@@ -60,6 +64,7 @@ app.post('/grill-temp', (req, res)=>{
   if(req.body.temp){
     try{
       grillControls.setTemp(req.body.temp, res)
+      res.sendStatus(200)
     } catch(e){
       res.send(`failed: ${e}`)
     }

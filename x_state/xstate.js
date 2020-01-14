@@ -1,21 +1,34 @@
 const xstate = require('xstate')
 
+const grillMode = (context, event)=>{
+  console.log('context', context);
+
+  return context.value === 'grill'
+}
+
 const stateMachine = xstate.Machine({
   context: {
-    mode: 'grill'
+    mode: 'smoke'
   },
   initial: 'idle',
   states: {
     idle: {
       on:{
-        START: 'start'
+        START: 'startGrill'
       }
     },
-    start: {
+    startGrill: {
       on: {
-        '': {
-          target: context.mode
-        }
+        '': 
+        [
+          {
+            target: 'grill',
+            cond: grillMode
+          },
+          {
+            target: 'smoke',
+          },
+        ]
       }
     },
     smoke: {
@@ -32,8 +45,7 @@ const stateMachine = xstate.Machine({
     }, 
     shutdown: {
       on: {
-        GRILL: 'grill',
-        SMOKE: 'smoke'
+        START: 'startGrill'
       }
     }
   }
