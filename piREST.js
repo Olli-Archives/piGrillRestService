@@ -9,7 +9,8 @@ const { StateService } = require('./x_state/xstate');
 const stateService = new StateService();
 
 stateService.onTransition(state=>{console.log(state.value)});
-stateService.startService();
+console.log(stateService);
+// stateService.startService();
 
 
 app.use(cors())
