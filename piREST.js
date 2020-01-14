@@ -4,12 +4,11 @@ const GpioDriver = require('./gpioDriver.js');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const grillControls = new GpioDriver();
+const  StateService  = require('./x_state/xstate');
+const stateService = new StateService();
 
-const { StateService } = require('./x_state/xstate');
-const stateService = new StateService;
-
-stateService.onTransition(state=>{console.log(state.value)});
-stateService.start();
+stateService.startService();
+stateService.machine.onTransition(state=>{console.log(state.value)});
 
 
 app.use(cors())
