@@ -32,18 +32,26 @@ const stateMachine = xstate.Machine({
 
 class StateService { 
 
-  constructor({
-    // machine
-  })
-
-  startService() {
-    // this.machine = interpret(stateMachine)
-    console.log('hi')
+  constructor(test){
+    this.name = test;
   }
 
-  send(target) {
-    this.machine.send(target)
+  present(){
+    return this.name
   }
+
+  // constructor({
+  //   // machine
+  // })
+
+  // startService() {
+  //   // this.machine = interpret(stateMachine)
+  //   console.log('hi')
+  // }
+
+  // send(target) {
+  //   this.machine.send(target)
+  // }
 }
 
 module.exports = StateService;
