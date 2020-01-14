@@ -36,7 +36,7 @@ class StateService {
  
 
   startService() {
-    this.machine = interpret(stateMachine)
+    this.machine = xstate.interpret(stateMachine)
   }
 
   send(target) {
