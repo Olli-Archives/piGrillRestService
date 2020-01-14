@@ -1,4 +1,4 @@
-import * as xstate from 'xstate';
+const xstate = require('xstate')
 
 const stateMachine = xstate.Machine({
   initial: 'idle',
