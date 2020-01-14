@@ -31,7 +31,7 @@ const stateMachine = xstate.Machine({
 })
 
 class StateService { 
-  machine;
+  machine
 
   start(){
     this.machine = interpret(stateMachine)
