@@ -10,7 +10,7 @@ const stateService = new StateService();
 
 stateService.onTransition(state=>{console.log(state.value)});
 console.log(stateService);
-stateService.startService();
+stateService.machine.startService();
 
 
 app.use(cors())
