@@ -5,7 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const grillControls = new GpioDriver();
 
-const { StateService } = require('./x_state/xstate');
+const  StateService  = require('./x_state/xstate');
 const stateService = new StateService('test');
 
 console.log(stateService.present());
