@@ -11,6 +11,7 @@ const grillMode = (context, event)=>{
 const stateMachine = xstate.Machine({
   context: {
     mode: 'smoke',
+    status: 'off',
   },
   initial: 'idle',
   states: {
@@ -46,10 +47,9 @@ const stateMachine = xstate.Machine({
       }
     }, 
     shutdown: {
- 
       invoke: {
        id: 'wait',
-        src: () => wait(8000),
+        src: () => wait(),
       onDone: 'idle'
       },
     }

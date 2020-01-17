@@ -20,6 +20,10 @@ app.get('/', (req, res,)=>{
   `)
 })
 
+app.get('/status', (req, res) =>{
+  res.send(stateService.machine.context)
+})
+
 app.post('/grill-state', (req, res)=>{
   if(req.body.state === "on"){
     try{
