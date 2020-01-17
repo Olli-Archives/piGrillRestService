@@ -5,7 +5,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const grillControls = new GpioDriver();
 const  StateService  = require('./x_state/xstate');
-const stateService = new StateService();
+let status;
+
+updateStatus = (context)=>{
+  status = context
+}
+const stateService = new StateService(updateStatus);
 
 stateService.startService();
 stateService.machine.onTransition(state=>{console.log(state.value)});
@@ -21,7 +26,8 @@ app.get('/', (req, res,)=>{
 })
 
 app.get('/status', (req, res) =>{
-  res.send(stateService.machine.context)
+  stateService.send('STATUS');
+  res.send(status);
 })
 
 app.post('/grill-state', (req, res)=>{

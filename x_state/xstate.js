@@ -2,78 +2,108 @@ const xstate = require('xstate');
 
 const wait = require('./functions/shutdown');
 
-
-
 const grillMode = (context, event)=>{
   return context.value === 'grill'
 }
 
-const stateMachine = xstate.Machine({
-  context: {
-    mode: 'smoke',
-    status: 'off',
-  },
-  initial: 'idle',
-  states: {
-    idle: {
-      on:{
-        START: 'startGrill'
-      }
+const stateMachine = (statusFunction)=>{
+  return xstate.Machine({
+    context: {
+      mode: 'smoke',
+      status: 'off',
     },
-    startGrill: {
-      on: {
-        '': 
-        [
-          {
-            target: 'grill',
-            cond: grillMode
-          },
-          {
-            target: 'smoke',
-          },
-        ]
-      }
-    },
-    smoke: {
-      on: {
-        GRILL: 'grill',
-        GRILL_OFF: 'shutdown'
-      }
-    },
-    grill: {
-      on: {
-        SMOKE: 'smoke',
-        GRILL_OFF:'shutdown' 
-      }
-    }, 
-    shutdown: {
-      invoke: {
-       id: 'wait',
-        src: () => wait(),
-      onDone: 'idle'
+    initial: 'idle',
+    states: {
+      idle: {
+        on:{
+          START: 'startGrill',
+          STATUS: {
+            actions: (context)=>{
+              statusFunction(context)
+            }
+          }
+        }
       },
+      startGrill: {
+        on: {
+          '': 
+          [
+            {
+              target: 'grill',
+              cond: grillMode
+            },
+            {
+              target: 'smoke',
+            },
+          ],
+          STATUS: {
+            actions: (context)=>{
+              statusFunction(context)
+            }
+          }
+        }
+      },
+      smoke: {
+        on: {
+          GRILL: 'grill',
+          GRILL_OFF: 'shutdown',
+          STATUS: {
+            actions: (context)=>{
+              statusFunction(context)
+            }
+          }
+        }
+      },
+      grill: {
+        on: {
+          SMOKE: 'smoke',
+          GRILL_OFF:'shutdown' ,
+          STATUS: {
+            actions: (context)=>{
+              statusFunction(context)
+            }
+          }
+        }
+      }, 
+      shutdown: {
+        invoke: {
+         id: 'wait',
+          src: () => wait(),
+        onDone: 'idle'
+        },
+        on: {
+          STATUS: {
+            actions: (context)=>{
+              statusFunction(context)
+            }
+          }
+        }
+      }
     }
-  }
-})
+  })
+} 
 
 class StateService { 
  machine;
+ statusCallBack;
 
- 
+ constructor(callBack){
+ this.statusCallBack = callBack
+ }
+
+  statusFunction = (callBack)=>{
+    return (context)=>{
+      callBack(context)}
+  }
 
   startService() {
-    this.machine = xstate.interpret(stateMachine);
+    this.machine = xstate.interpret(stateMachine(this.statusFunction(this.statusCallBack)));
     this.machine.start();
   }
 
   send(target) {
     this.machine.send(target);
   }
-
-  context(){
-    return this.machine.withContext(context)
-  }
-
 }
 
 module.exports = StateService;
