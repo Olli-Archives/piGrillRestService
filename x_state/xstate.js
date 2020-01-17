@@ -70,6 +70,10 @@ class StateService {
     this.machine.send(target);
   }
 
+  context(){
+    return this.machine.withContext(context)
+  }
+
 }
 
 module.exports = StateService;
