@@ -27,7 +27,7 @@ app.get('/', (req, res,)=>{
 
 app.get('/status', (req, res) =>{
   stateService.send('STATUS');
-  res.send(status);
+  res.send(stateService.machine.state);
 })
 
 app.post('/grill-state', (req, res)=>{
