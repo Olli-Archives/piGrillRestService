@@ -30,10 +30,16 @@ const stateMachine = (statusFunction)=>{
           [
             {
               target: 'grill',
-              cond: grillMode
+              cond: grillMode,
+              invoke: {
+                src:  xstate.assign({mode: ()=> 'grill'})
+              },
             },
             {
               target: 'smoke',
+              invoke: {
+                src:  xstate.assign({mode: ()=> 'smoke'})
+              },
             },
           ],
           STATUS: {
@@ -45,6 +51,7 @@ const stateMachine = (statusFunction)=>{
       },
       smoke: {
         on: {
+       
           GRILL: 'grill',
           GRILL_OFF: 'shutdown',
           STATUS: {
