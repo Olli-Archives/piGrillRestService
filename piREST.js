@@ -11,7 +11,7 @@ updateStatus = (context)=>{
 const stateService = new StateService(updateStatus);
 
 stateService.startService();
-stateService.machine.onTransition(state=>{console.log(state.value)});
+stateService.machine.onTransition(state=>{console.log('on transition state value:', state.value)});
 
 
 app.use(cors())
