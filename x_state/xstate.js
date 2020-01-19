@@ -16,7 +16,7 @@ const stateMachine = {
         invoke:{
           id: 'startGrill',
           src: (context, event) => { return new Promise((res, rej)=>{
-            const done = ()=>res.send('done');
+            const done = ()=>res('done');
             setTimeout(done, 8000);
           })},
           onDone: [
