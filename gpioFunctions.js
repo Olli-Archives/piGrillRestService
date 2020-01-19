@@ -42,6 +42,7 @@ const gpioAllOff = ()=>{
     fan.writeSync(0);
     igniter.writeSync(0);
     auger.writeSync(0);
+    rando.writeSync(0);
     resolve('grillin');
   });
 }
