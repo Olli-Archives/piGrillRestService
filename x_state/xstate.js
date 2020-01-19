@@ -10,6 +10,7 @@ const stateMachine = {
         }
       },
       startGrill: {
+        initial: 'noError',
         context:{
           targetMode:""
         },
