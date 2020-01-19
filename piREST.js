@@ -28,20 +28,10 @@ app.get('/status', (req, res) =>{
 })
 
 app.post('/grill-state', (req, res)=>{
-  if(req.body.state === "on"){
-    try{
-      stateService.send('START')
-      res.sendStatus(200)
-    } catch(e){
-      res.send(`failed:`)
-    }
-  } else if(req.body.state === "off"){
-    try{
-      stateService.send('GRILL_OFF')
-      res.sendStatus(200)
-    } catch(e){
-      res.send(`failed:`)
-    }
+  if(req.body.state){
+      const targetMode = req.body.state;
+      console.log('sending to x-state:', targetMode);
+      stateService.send('SELECT_MODE', targetMode);
   } else {
     res.send('invalid request')
   }

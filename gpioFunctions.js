@@ -4,14 +4,16 @@ const fan = new Gpio(14, 'high');
 const igniter = new Gpio(15, 'high');
 const auger = new Gpio(18, 'high');
 const rando = new Gpio(25, 'high');
+const on = 0;
+const off = 1;
 
 const gpioShutdown = ()=>{
   // TODO: check successfull writeSync
   // resolve with error if not
   return new Promise(resolve => {
-    fan.writeSync(1);
-    igniter.writeSync(0);
-    auger.writeSync(0);
+    fan.writeSync(on);
+    igniter.writeSync(off);
+    auger.writeSync(off);
     setTimeout(resolve, 8000);
   });
 }
@@ -19,9 +21,9 @@ const gpioShutdown = ()=>{
 const gpioGrill = ()=>{
 
   return new Promise(resolve => {
-    fan.writeSync(1);
-    igniter.writeSync(0);
-    auger.writeSync(1);
+    fan.writeSync(on);
+    igniter.writeSync(off);
+    auger.writeSync(on);
     resolve('grillin');
   });
 }
@@ -29,9 +31,9 @@ const gpioGrill = ()=>{
 const gpioGrillOff = ()=>{
 
   return new Promise(resolve => {
-    fan.writeSync(0);
-    igniter.writeSync(0);
-    auger.writeSync(0);
+    fan.writeSync(off);
+    igniter.writeSync(off);
+    auger.writeSync(off);
     resolve('grillin');
   });
 }
@@ -40,10 +42,10 @@ const gpioAllOff = ()=>{
   console.log('all off called!!!!');
 
   return new Promise(resolve => {
-    fan.writeSync(1);
-    igniter.writeSync(1);
-    auger.writeSync(1);
-    rando.writeSync(1);
+    fan.writeSync(off);
+    igniter.writeSync(off);
+    auger.writeSync(off);
+    rando.writeSync(off);
     resolve('grillin');
   });
 }

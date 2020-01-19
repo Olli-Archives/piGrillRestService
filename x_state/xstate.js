@@ -10,19 +10,28 @@ const stateMachine = {
         }
       },
       startGrill: {
+        context:{
+          targetMode:""
+        },
+        states: {
+          noError: {},
+          error: {
+            inital: 'empty',
+            states: {
+              empty:{},
+              failedIgnition:{}
+            }
+          }
+        },
         on: {
-          '': 
-          [
-            {
-              target: 'grill',
-            },
-            {
-              target: 'smoke',
-            },
-          ],
-        }
+          SELECT_MODE: {
+            actions: 'cacheMode'
+          }
       },
+    },
       smoke: {
+            entry: ['startGrill'],
+        exit: ['allOff'],
         on: {
           GRILL: 'grill',
           GRILL_OFF: 'shutdown',
@@ -34,7 +43,7 @@ const stateMachine = {
         //    src: () => gpioGrill(),
         //  },
         entry: ['startGrill'],
-        exit: ['endGrill'],
+        exit: ['allOff'],
         on: {
           SMOKE: 'smoke',
           GRILL_OFF:'shutdown' ,
@@ -50,29 +59,35 @@ const stateMachine = {
     },
      actions: {
         startGrill: () => gpioGrill(),
-        endGrill: () => gpioAllOff()
+        allOff: () => gpioAllOff(),
+        cacheMode: xstate.assign((context, event) => {
+          console.log('event in cacheMode', event, 'context in cacheMode:', context);
+          return {
+            targetMode: event.value
+          }
+        })
       }
   };
 
 
-const actions = {
-  actions: {
-    startGrill: () => gpioGrill(),
-    endGrill: () => gpioAllOff(),
+// const actions = {
+//   actions: {
+//     startGrill: () => gpioGrill(),
+//     endGrill: () => gpioAllOff(),
 
-  }
-}
+//   }
+// }
 
 class StateService { 
  machine;
 
   startService() {
-    this.machine = xstate.interpret(xstate.Machine(stateMachine, actions));
+    this.machine = xstate.interpret(xstate.Machine(stateMachine));
     this.machine.start();
   }
 
-  send(target) {
-    this.machine.send(target);
+  send(target, value="") {
+    this.machine.send(target, value);
   }
 }
 
