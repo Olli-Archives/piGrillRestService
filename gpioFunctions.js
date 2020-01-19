@@ -37,6 +37,7 @@ const gpioGrillOff = ()=>{
 }
 
 const gpioAllOff = ()=>{
+  console.log('all off called!!!!');
 
   return new Promise(resolve => {
     fan.writeSync(1);
