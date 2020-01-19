@@ -13,6 +13,15 @@ const stateMachine = {
         }
       },
       startGrill: {
+        invoke:{
+          id: 'startGrill',
+          src: (context, event) => { return new Promise((res, rej)=>{setTimepout(res('hi'), 8000)})},
+          onDone: [
+            {target: 'smoke', cond: context => context.targetMode === 'smoke'},
+            {targert: 'grill', cond: context => context.targetMode == 'grill'},
+            {target: startGrill.error}
+          ]
+        },
         initial: 'noError',
         states: {
           noError: {},
@@ -26,9 +35,13 @@ const stateMachine = {
         },
         on: {
           SELECT_MODE: {
-            actions: ['cacheMode']
+            actions: ['updateContext']
           }
       },
+
+    },
+    awatingMode:{
+
     },
       smoke: {
             entry: ['startGrill'],
@@ -65,21 +78,11 @@ const actions = {
   actions: {
     startGrill: () => gpioGrill(),
     allOff: () => gpioAllOff(),
-    // cacheMode: xstate.assign((context, event) => {
-    //   console.log('event in cacheMode', event, 'context in cacheMode:', context);
-    //   return {
-    //     targetMode: event.value
-    //   }
-    // })
-    cacheMode: xstate.assign((context, value)=>{
+    updateContext: xstate.assign((context, value)=>{
       console.log('context before update:', context);
       return {
         [value.contextField]:value.contextFieldContent
       }
-      console.log(
-        'in assign context:', context,
-        'in assign value: ', value
-      )
     })
   }
 }
