@@ -47,18 +47,21 @@ const stateMachine = {
         onDone: 'idle'
         },
       }
-    },
-    actions: {
-      startGrill: () => gpioGrill,
-      endGrill: () => gpioGrillOff
     }
   }
+
+const actions = {
+  actions: {
+    startGrill: () => gpioGrill,
+    endGrill: () => gpioGrillOff
+  }
+}
 
 class StateService { 
  machine;
 
   startService() {
-    this.machine = xstate.interpret(xstate.Machine(stateMachine));
+    this.machine = xstate.interpret(xstate.Machine(stateMachine, actions));
     this.machine.start();
   }
 
