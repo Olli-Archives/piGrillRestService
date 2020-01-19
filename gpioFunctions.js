@@ -1,9 +1,9 @@
 const Gpio = require('onoff').Gpio;
 
-const fan = new Gpio(14, 'in');
-const igniter = new Gpio(15, 'in');
-const auger = new Gpio(18, 'in');
-const rando = new Gpio(25, 'in');
+const fan = new Gpio(14, 'high');
+const igniter = new Gpio(15, 'high');
+const auger = new Gpio(18, 'high');
+const rando = new Gpio(25, 'high');
 
 const gpioShutdown = ()=>{
   // TODO: check successfull writeSync
