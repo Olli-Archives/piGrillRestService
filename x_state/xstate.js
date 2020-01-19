@@ -49,16 +49,16 @@ const stateMachine = {
       }
     },
      actions: {
-        startGrill: () => gpioGrill,
-        endGrill: () => gpioGrillOff
+        startGrill: () => gpioGrill(),
+        endGrill: () => gpioGrillOff()
       }
   };
 
 
 const actions = {
   actions: {
-    startGrill: () => gpioGrill,
-    endGrill: () => gpioGrillOff
+    startGrill: () => gpioGrill(),
+    endGrill: () => gpioGrillOff()
   }
 }
 
