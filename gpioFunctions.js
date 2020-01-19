@@ -15,6 +15,15 @@ const gpioShutdown = ()=>{
   });
 }
 
+const gpioGrill = ()=>{
+  return new Promise(resolve => {
+    fan.writeSync(1);
+    igniter.writeSync(0);
+    auger.writeSync(1);
+    resolve('grillin');
+  });
+}
+
 
 class GpioDriver {
   
@@ -46,5 +55,6 @@ setTemp(temp, res){
 
 module.exports = {
   gpioShutdown,
-  GpioDriver
+  GpioDriver,
+  gpioGrill
 }
