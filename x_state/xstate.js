@@ -72,6 +72,9 @@ const actions = {
     //   }
     // })
     cacheMode: xstate.assign((context, value)=>{
+      return {
+        [value.contextField]:value.contextFieldContent
+      }
       console.log(
         'in assign context:', context,
         'in assign value: ', value
