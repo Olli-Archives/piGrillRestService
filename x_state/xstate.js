@@ -72,7 +72,8 @@ const actions = {
     //   }
     // })
     cacheMode: (context, event) => {
-        console.log('cacheMode action event:', event);
+        console.log('cacheMode action event.vlaue:', event.value);
+        console.log('cacheMode action context', context);
         xstate.assign(()=>{
           return {
             targetMode: event.value
