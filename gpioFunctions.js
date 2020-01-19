@@ -16,6 +16,7 @@ const gpioShutdown = ()=>{
 }
 
 const gpioGrill = ()=>{
+  console.log('invoked grill')
   return new Promise(resolve => {
     fan.writeSync(1);
     igniter.writeSync(0);
