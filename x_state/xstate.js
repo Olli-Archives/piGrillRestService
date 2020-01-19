@@ -15,7 +15,10 @@ const stateMachine = {
       startGrill: {
         invoke:{
           id: 'startGrill',
-          src: (context, event) => { return new Promise((res, rej)=>{setTimeout(()=>{()=>res.send('hi')}, 8000)})},
+          src: (context, event) => { return new Promise((res, rej)=>{
+            const done = ()=>res.send('done');
+            setTimeout(done, 8000);
+          })},
           onDone: [
             {target: 'smoke', cond: context => context.targetMode === 'smoke'},
             {targert: 'grill', cond: context => context.targetMode == 'grill'},
