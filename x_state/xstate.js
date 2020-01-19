@@ -19,7 +19,7 @@ const stateMachine = {
           onDone: [
             {target: 'smoke', cond: context => context.targetMode === 'smoke'},
             {targert: 'grill', cond: context => context.targetMode == 'grill'},
-            {target: startGrill.error}
+            {target: 'startGrill.error'}
           ]
         },
         initial: 'noError',
