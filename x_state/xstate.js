@@ -1,7 +1,7 @@
 const xstate = require('xstate');
 const { gpioShutdown, gpioGrill, gpioGrillOff } = require('../gpioFunctions');
 
-const stateMachine = {
+const stateMachine = ({
     initial: 'idle',
     states: {
       idle: {
@@ -48,7 +48,13 @@ const stateMachine = {
         },
       }
     }
-  }
+  },
+  {
+    actions: {
+      startGrill: () => gpioGrill,
+      endGrill: () => gpioGrillOff
+    }
+  })
 
 const actions = {
   actions: {
@@ -61,7 +67,7 @@ class StateService {
  machine;
 
   startService() {
-    this.machine = xstate.interpret(xstate.Machine(stateMachine, actions));
+    this.machine = xstate.interpret(xstate.Machine(stateMachine));
     this.machine.start();
   }
 
