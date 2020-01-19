@@ -72,6 +72,7 @@ const actions = {
     //   }
     // })
     cacheMode: xstate.assign((context, value)=>{
+      console.log('context before update:', context);
       return {
         [value.contextField]:value.contextFieldContent
       }
