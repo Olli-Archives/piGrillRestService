@@ -1,5 +1,5 @@
 const xstate = require('xstate');
-const { gpioShutdown, gpioGrill, gpioGrillOff } = require('../gpioFunctions');
+const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff } = require('../gpioFunctions');
 
 const stateMachine = {
     initial: 'idle',
@@ -50,7 +50,7 @@ const stateMachine = {
     },
      actions: {
         startGrill: () => gpioGrill(),
-        endGrill: () => gpioGrillOff()
+        endGrill: () => gpioAllOff()
       }
   };
 
@@ -58,7 +58,8 @@ const stateMachine = {
 const actions = {
   actions: {
     startGrill: () => gpioGrill(),
-    endGrill: () => gpioGrillOff()
+    endGrill: () => gpioAllOff(),
+
   }
 }
 

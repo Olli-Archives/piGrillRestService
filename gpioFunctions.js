@@ -3,6 +3,7 @@ const Gpio = require('onoff').Gpio;
 const fan = new Gpio(14, 'out');
 const igniter = new Gpio(15, 'out');
 const auger = new Gpio(18, 'out');
+const rando = new Gpio(25, 'out');
 
 const gpioShutdown = ()=>{
   // TODO: check successfull writeSync
@@ -16,7 +17,7 @@ const gpioShutdown = ()=>{
 }
 
 const gpioGrill = ()=>{
-  console.log('invoked grill')
+
   return new Promise(resolve => {
     fan.writeSync(1);
     igniter.writeSync(0);
@@ -26,7 +27,17 @@ const gpioGrill = ()=>{
 }
 
 const gpioGrillOff = ()=>{
-  console.log('invoked grill')
+
+  return new Promise(resolve => {
+    fan.writeSync(0);
+    igniter.writeSync(0);
+    auger.writeSync(0);
+    resolve('grillin');
+  });
+}
+
+const gpioAllOff = ()=>{
+
   return new Promise(resolve => {
     fan.writeSync(0);
     igniter.writeSync(0);
@@ -38,17 +49,15 @@ const gpioGrillOff = ()=>{
 
 class GpioDriver {
   
-  constructor(){
-    this.grillGpio = new Gpio(25, 'out');
-  }
+
 
 grillOn(res){
-  this.grillGpio.writeSync(1);
+  rando.writeSync(1);
   res.send(`grill status: ${this.grillGpio.readSync()}`)
 }
 
 grillOff (res){
-  this.grillGpio.writeSync(0);
+  rando.writeSync(0);
   res.send(`grill status: ${this.grillGpio.readSync()}`)
 }
 
@@ -68,5 +77,6 @@ module.exports = {
   gpioShutdown,
   GpioDriver,
   gpioGrill,
-  gpioGrillOff
+  gpioGrillOff,
+  gpioAllOff,
 }
