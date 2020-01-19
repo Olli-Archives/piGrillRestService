@@ -3,6 +3,9 @@ const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff } = require('../gpioFu
 
 const stateMachine = {
     initial: 'idle',
+    context:{
+      targetMode:""
+    },
     states: {
       idle: {
         on:{
@@ -11,9 +14,6 @@ const stateMachine = {
       },
       startGrill: {
         initial: 'noError',
-        context:{
-          targetMode:""
-        },
         states: {
           noError: {},
           error: {
