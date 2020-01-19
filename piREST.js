@@ -31,7 +31,7 @@ app.post('/grill-state', (req, res)=>{
   if(req.body.state){
       const targetState = req.body.state;
       console.log('sending target state to x-state:', targetState);
-      stateService.send(targetState);
+      stateService.send(targetState.toString());
   } else {
     res.send('invalid request')
   }
