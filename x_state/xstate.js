@@ -1,5 +1,5 @@
 const xstate = require('xstate');
-const { gpioShutdown } = require('./gpioFunctions');
+const { gpioShutdown } = require('../gpioFunctions');
 
 const stateMachine = {
     initial: 'idle',
