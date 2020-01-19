@@ -26,7 +26,7 @@ const stateMachine = {
         },
         on: {
           SELECT_MODE: {
-            actions: 'cacheMode'
+            entry: ['cacheMode']
           }
       },
     },
