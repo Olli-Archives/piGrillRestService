@@ -61,12 +61,21 @@ const stateMachine = {
      actions: {
         startGrill: () => gpioGrill(),
         allOff: () => gpioAllOff(),
-        cacheMode: xstate.assign((context, event) => {
-          console.log('event in cacheMode', event, 'context in cacheMode:', context);
-          return {
-            targetMode: event.value
-          }
-        })
+        // cacheMode: xstate.assign((context, event) => {
+        //   console.log('event in cacheMode', event, 'context in cacheMode:', context);
+        //   return {
+        //     targetMode: event.value
+        //   }
+        // })
+        cacheMode: (context, event) => {
+            console.log('cacheMode action event:', event);
+            xstate.assign(()=>{
+              return {
+                targetMode: event.value
+              }
+            })
+      
+        }
       }
   };
 
