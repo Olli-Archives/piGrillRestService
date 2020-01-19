@@ -29,9 +29,9 @@ app.get('/status', (req, res) =>{
 
 app.post('/grill-state', (req, res)=>{
   if(req.body.state){
-      const targetMode = req.body.state;
-      console.log('sending to x-state:', targetMode);
-      stateService.send('SELECT_MODE', targetMode);
+      const targetState = req.body.state;
+      console.log('sending target state to x-state:', targetState);
+      stateService.send(targetState);
   } else {
     res.send('invalid request')
   }
