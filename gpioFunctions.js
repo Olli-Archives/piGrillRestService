@@ -39,10 +39,10 @@ const gpioGrillOff = ()=>{
 const gpioAllOff = ()=>{
 
   return new Promise(resolve => {
-    fan.writeSync(0);
-    igniter.writeSync(0);
-    auger.writeSync(0);
-    rando.writeSync(0);
+    fan.writeSync(1);
+    igniter.writeSync(1);
+    auger.writeSync(1);
+    rando.writeSync(1);
     resolve('grillin');
   });
 }
