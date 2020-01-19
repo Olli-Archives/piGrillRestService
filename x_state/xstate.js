@@ -30,9 +30,8 @@ const stateMachine = {
       },
       grill: {
         invoke: {
-          id: 'wait',
+          id: 'grill',
            src: () => gpioGrill(),
-         onDone: 'idle'
          },
         on: {
           SMOKE: 'smoke',
