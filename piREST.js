@@ -1,11 +1,9 @@
 const express = require('express');
 const app = express();
-const GpioDriver = require('./gpioDriver.js');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const grillControls = new GpioDriver();
 const  StateService  = require('./x_state/xstate');
-let status;
+
 
 updateStatus = (context)=>{
   status = context
@@ -26,7 +24,6 @@ app.get('/', (req, res,)=>{
 })
 
 app.get('/status', (req, res) =>{
-  stateService.send('STATUS');
   res.send(stateService.machine.state);
 })
 
@@ -73,14 +70,12 @@ app.post('/grill-mode', (req, res)=>{
 app.post('/grill-temp', (req, res)=>{
   if(req.body.temp){
     try{
-      grillControls.setTemp(req.body.temp, res)
       res.sendStatus(200)
     } catch(e){
       res.send(`failed: ${e}`)
     }
   }
 })
-
 
 app.listen(3001, ()=>{
   console.log('listening on port 3001')

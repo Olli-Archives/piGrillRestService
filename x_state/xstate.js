@@ -1,7 +1,5 @@
 const xstate = require('xstate');
-
-const wait = require('./functions/shutdown');
-
+const { gpioShutdown } = require('./gpioFunctions');
 
 const stateMachine = {
     initial: 'idle',
@@ -39,7 +37,7 @@ const stateMachine = {
       shutdown: {
         invoke: {
          id: 'wait',
-          src: () => wait(),
+          src: () => gpioShutdown(),
         onDone: 'idle'
         },
       }
@@ -48,7 +46,6 @@ const stateMachine = {
 
 class StateService { 
  machine;
-
 
   startService() {
     this.machine = xstate.interpret(xstate.Machine(stateMachine));

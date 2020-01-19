@@ -1,5 +1,21 @@
 const Gpio = require('onoff').Gpio;
 
+const fan = new Gpio(14, 'out');
+const igniter = new Gpio(15, 'out');
+const auger = new Gpio(18, 'out');
+
+const gpioShutdown = ()=>{
+  // TODO: check successfull writeSync
+  // resolve with error if not
+  return new Promise(resolve => {
+    fan.writeSync(1);
+    igniter.writeSync(0);
+    auger.writeSync(0);
+    setTimeout(resolve, 8000);
+  });
+}
+
+
 class GpioDriver {
   
   constructor(){
@@ -28,4 +44,7 @@ setTemp(temp, res){
 }
 }
 
-module.exports = GpioDriver
+module.exports = {
+  gpioShutdown,
+  GpioDriver
+}
