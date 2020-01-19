@@ -27,12 +27,11 @@ app.get('/status', (req, res) =>{
   res.send(stateService.machine.state);
 })
 
-app.post('/grill-state', (req, res)=>{
-  if(req.body.state){
-      const targetState = req.body.state;
-      const value = req.body.value;
-      console.log('sending target state to x-state:', targetState, 'value is:', value);
-      stateService.send(targetState, value ? {valueString: value} : {valueString: value});
+app.post('/send', (req, res)=>{
+  if(req.body){
+      const {targetState, context} = req.body;
+      console.log('sending target state to x-state:', targetState, 'context is:', context);
+      stateService.send(targetState, context ? context : {});
   } else {
     res.send('invalid request')
   }
