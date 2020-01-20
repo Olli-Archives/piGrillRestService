@@ -1,5 +1,5 @@
 const xstate = require('xstate');
-const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff, ignite, grill } = require('../gpioFunctions');
+const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff, ignite, grill, smoke } = require('../gpioFunctions');
 
 const stateMachine = {
     initial: 'idle',
@@ -43,7 +43,10 @@ const stateMachine = {
 
     },
       smoke: {
-        exit: ['allOff'],
+        invoke: {
+          id: 'GPIO_SMOKE',
+          src: smoke
+        },
         on: {
           GRILL: 'grill',
           GRILL_OFF: 'shutdown',

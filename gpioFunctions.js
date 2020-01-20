@@ -19,7 +19,6 @@ const gpioShutdown = ()=>{
 }
 
 const gpioGrill = ()=>{
-
   return new Promise(resolve => {
     fan.writeSync(on);
     igniter.writeSync(off);
@@ -29,7 +28,6 @@ const gpioGrill = ()=>{
 }
 
 const gpioGrillOff = ()=>{
-
   return new Promise(resolve => {
     fan.writeSync(off);
     igniter.writeSync(off);
@@ -91,7 +89,39 @@ const grill = (context, event) => (callback, onReceive) => {
   
   // Perform cleanup
   return () => clearInterval(intervalHandle);
+}
 
+// Because smoke needs to have its timers cleared, it needs to be a callback
+const smoke = (context, event) => (callback, onReceive) => {
+  let augerOnHandle;
+  let augerOffHandle;
+  const smokeFunction = ()=>{
+    auger.writeSync(on);
+    igniter.writeSync(on);
+    augerOnHandle = setTimeout(()=>auger.writeSync(off), 1000)
+    augerOffHandle = setTimeout(()=>auger.writeSync(off), 5000)
+  }
+
+  // Set all GPIO to grill mode
+  fan.writeSync(on);
+  igniter.writeSync(off);
+
+  // Togle auget to simulate PID conrolling temp
+  // unused targetTemp will be used to controll PID in future
+  const intervalHandle = setInterval(smokeFunction, 15000)
+
+  // Since Smoke does not have user input on temp it doesn't need
+  // onReceive for getting target temp
+
+  // onReceive(e=>{
+  // handle received data here
+  // })
+  // Perform cleanup
+  return () => {
+    clearInterval(intervalHandle);
+    clearTimeout(augerOnHandle);
+    clearTimeout(augerOffHandle);
+  };
 }
 
 
@@ -128,5 +158,6 @@ module.exports = {
   gpioGrillOff,
   gpioAllOff,
   ignite,
-  grill
+  grill,
+  smoke
 }
