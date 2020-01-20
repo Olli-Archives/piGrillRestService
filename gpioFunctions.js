@@ -99,7 +99,7 @@ const smoke = (context, event) => (callback, onReceive) => {
     auger.writeSync(on);
     igniter.writeSync(on);
     augerOnHandle = setTimeout(()=>auger.writeSync(off), 1000)
-    augerOffHandle = setTimeout(()=>auger.writeSync(off), 5000)
+    augerOffHandle = setTimeout(()=>igniter.writeSync(off), 5000)
   }
 
   // Set all GPIO to grill mode
