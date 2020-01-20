@@ -20,7 +20,7 @@ const stateMachine = {
             setTimeout(done, 8000);
           })},
           onDone: [
-            {target: 'grill', cond: context => { console.log('context in cond',context); context.targetMode == 'grill'}},
+            {target: 'grill', cond: context => context.targetMode == 'grill'},
             {target: 'smoke'},
           ]
         },
