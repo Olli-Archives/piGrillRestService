@@ -36,17 +36,16 @@ const stateMachine = {
           }
         },
         on: {
-          SELECT_MODE: {
+          GRILL: {
+            actions: ['updateContext']
+          },
+          SMOKE: {
             actions: ['updateContext']
           }
       },
 
     },
-    awatingMode:{
-
-    },
       smoke: {
-            entry: ['startGrill'],
         exit: ['allOff'],
         on: {
           GRILL: 'grill',
