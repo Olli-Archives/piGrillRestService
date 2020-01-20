@@ -72,7 +72,7 @@ const grill = (context, event) => (callback, onReceive) => {
   let targetTemp
   const toggleAuger = ()=>{
     auger.writeSync(on)
-    setTimeout(()=>auger.writeSync(off), 500)
+    setTimeout(()=>auger.writeSync(off), 1000)
   }
 
   // Set all GPIO to grill mode
@@ -81,7 +81,7 @@ const grill = (context, event) => (callback, onReceive) => {
 
   // Togle auget to simulate PID conrolling temp
   // unused targetTemp will be used to controll PID in future
-  const intervalHandle = setInterval(toggleAuger, 1000)
+  const intervalHandle = setInterval(toggleAuger, 2000)
 
   // Update target temp which is received from parent machine
   // if user decides to update target temp
