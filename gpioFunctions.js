@@ -50,6 +50,22 @@ const gpioAllOff = ()=>{
   });
 }
 
+const ignite = (context, event) => { return new Promise((res, rej)=>{
+
+  const resolve = ()=>{
+    igniter.writeSync(off);
+    res('done')};
+
+  const augerOff = ()=>auger.writeSync(off);
+
+  fan.writeSync(on);
+  auger.writeSync(on);
+  igniter.writeSync(on);
+
+  setTimeout(augerOff, 4000);
+  setTimeout(resolve, 8000);
+})}
+
 
 class GpioDriver {
   

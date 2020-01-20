@@ -1,5 +1,5 @@
 const xstate = require('xstate');
-const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff } = require('../gpioFunctions');
+const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff, ignite } = require('../gpioFunctions');
 
 const stateMachine = {
     initial: 'idle',
@@ -15,10 +15,7 @@ const stateMachine = {
       startGrill: {
         invoke:{
           id: 'startGrill',
-          src: (context, event) => { return new Promise((res, rej)=>{
-            const done = ()=>res('done');
-            setTimeout(done, 8000);
-          })},
+          src: ignite,
           onDone: [
             {target: 'grill', cond: context => context.targetMode == 'grill'},
             {target: 'smoke'},
@@ -73,6 +70,17 @@ const stateMachine = {
       }
     },
   };
+
+  // TODO: Do I need to make this a state machine??
+  // ignitionMachine = xstate.Machine({
+  //   id: 'igniter',
+  //   initial: 'startIgnition',
+  //   states: {
+  //     startIgnition: {
+
+  //     }
+  //   }
+  // })
 
 
 const actions = {
