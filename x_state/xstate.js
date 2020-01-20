@@ -20,9 +20,8 @@ const stateMachine = {
             setTimeout(done, 8000);
           })},
           onDone: [
-            {target: 'smoke', cond: context => context.targetMode === 'smoke'},
             {targert: 'grill', cond: context => context.targetMode == 'grill'},
-            {target: 'startGrill.error'}
+            {target: 'smoke'},
           ]
         },
         initial: 'noError',
