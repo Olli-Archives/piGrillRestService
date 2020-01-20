@@ -85,7 +85,7 @@ const grill = (context, event) => (callback, onReceive) => {
 
   // Update target temp which is received from parent machine
   // if user decides to update target temp
-  onReveice(e=>{
+  onReceive(e=>{
       targetTemp = e.type
   })
   
