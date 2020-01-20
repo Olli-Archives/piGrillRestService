@@ -42,7 +42,8 @@ const stateMachine = {
           },
           SMOKE: {
             actions: ['updateContext']
-          }
+          },
+          GRILL_OFF: 'shutdown',
       },
 
     },
