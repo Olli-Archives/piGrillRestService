@@ -1,5 +1,5 @@
 const xstate = require('xstate');
-const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff, ignite } = require('../gpioFunctions');
+const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff, ignite, grill } = require('../gpioFunctions');
 
 const stateMachine = {
     initial: 'idle',
@@ -14,7 +14,7 @@ const stateMachine = {
       },
       startGrill: {
         invoke:{
-          id: 'startGrill',
+          id: 'GPIO_IGNITE',
           src: ignite,
           onDone: [
             {target: 'grill', cond: context => context.targetMode == 'grill'},
@@ -50,12 +50,10 @@ const stateMachine = {
         }
       },
       grill: {
-        // invoke: {
-        //   id: 'grill',
-        //    src: () => gpioGrill(),
-        //  },
-        entry: ['startGrill'],
-        exit: ['allOff'],
+        invoke: {
+          id: 'GPIO_GRILL',
+          src: grill
+        },
         on: {
           SMOKE: 'smoke',
           GRILL_OFF:'shutdown' ,

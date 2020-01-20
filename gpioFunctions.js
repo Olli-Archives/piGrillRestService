@@ -50,6 +50,7 @@ const gpioAllOff = ()=>{
   });
 }
 
+// Because ignite doesn't need any event listeners from parent machine, it can be a promise 
 const ignite = (context, event) => { return new Promise((res, rej)=>{
 
   const resolve = ()=>{
@@ -65,6 +66,33 @@ const ignite = (context, event) => { return new Promise((res, rej)=>{
   setTimeout(augerOff, 4000);
   setTimeout(resolve, 8000);
 })}
+
+// Because Grill needs onReceive to listed from parent when to resolve, it needs to be a callback
+const grill = (context, event) => (callback, onReceive) => {
+  let targetTemp
+  const toggleAuger = ()=>{
+    auger.writeSync(on)
+    setTimeout(()=>auger.writeSync(off), 500)
+  }
+
+  // Set all GPIO to grill mode
+  fan.writeSync(on);
+  igniter.writeSync(off);
+
+  // Togle auget to simulate PID conrolling temp
+  // unused targetTemp will be used to controll PID in future
+  const intervalHandle = setInterval(toggleAuger, 1000)
+
+  // Update target temp which is received from parent machine
+  // if user decides to update target temp
+  onReveice(e=>{
+      targetTemp = e.type
+  })
+  
+  // Perform cleanup
+  return () => clearInterval(intervalHandle);
+
+}
 
 
 class GpioDriver {
