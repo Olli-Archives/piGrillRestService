@@ -99,4 +99,5 @@ module.exports = {
   gpioGrill,
   gpioGrillOff,
   gpioAllOff,
+  ignite
 }
