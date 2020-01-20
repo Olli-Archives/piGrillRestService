@@ -74,7 +74,7 @@ const stateMachine = {
       shutdown: {
         invoke: {
         id: 'GPIO_SHUT_DOWN',
-        src: shtudown,
+        src: shutDown,
         onDone: 'idle'
         },
       }
