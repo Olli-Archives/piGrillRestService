@@ -1,5 +1,5 @@
 const xstate = require('xstate');
-const { gpioShutdown, gpioGrill, gpioGrillOff, gpioAllOff, ignite, grill, smoke } = require('../gpioFunctions');
+const { idle, ignite, grill, smoke, shutDown } = require('../gpioFunctions');
 
 const stateMachine = {
     initial: 'idle',
@@ -7,6 +7,10 @@ const stateMachine = {
       targetMode:""
     },
     states: {
+      invoke: {
+        id: 'GPIO_IDLE',
+        src: idle
+      },
       idle: {
         on:{
           START: 'startGrill',
@@ -64,32 +68,17 @@ const stateMachine = {
       }, 
       shutdown: {
         invoke: {
-         id: 'wait',
-          src: () => gpioShutdown(),
+         id: 'GPIO_SHUT_DOWN',
+          src: () => shutDown(),
         onDone: 'idle'
         },
       }
     },
   };
 
-  // TODO: Do I need to make this a state machine??
-  // ignitionMachine = xstate.Machine({
-  //   id: 'igniter',
-  //   initial: 'startIgnition',
-  //   states: {
-  //     startIgnition: {
-
-  //     }
-  //   }
-  // })
-
-
 const actions = {
   actions: {
-    startGrill: () => gpioGrill(),
-    allOff: () => gpioAllOff(),
     updateContext: xstate.assign((context, value)=>{
-      console.log('context before update:', context);
       return {
         [value.contextField]:value.contextFieldContent
       }
