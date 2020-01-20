@@ -4,7 +4,8 @@ const { idle, ignite, grill, smoke, shutDown } = require('../gpioFunctions');
 const stateMachine = {
     initial: 'idle',
     context:{
-      targetMode:""
+      targetMode:"",
+      targetTemp:200
     },
     states: {
       idle: {
@@ -14,6 +15,9 @@ const stateMachine = {
         },
         on:{
           START: 'startGrill',
+          UPDATE_TEMP:{
+            actions: ['updateContext']
+          }
         }
       },
       startGrill: {
@@ -69,8 +73,8 @@ const stateMachine = {
       }, 
       shutdown: {
         invoke: {
-         id: 'GPIO_SHUT_DOWN',
-          src: () => shutDown(),
+        id: 'GPIO_SHUT_DOWN',
+        src: shtudown,
         onDone: 'idle'
         },
       }
