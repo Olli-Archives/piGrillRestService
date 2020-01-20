@@ -7,11 +7,11 @@ const stateMachine = {
       targetMode:""
     },
     states: {
-      invoke: {
-        id: 'GPIO_IDLE',
-        src: idle
-      },
       idle: {
+        invoke: {
+          id: 'GPIO_IDLE',
+          src: idle
+        },
         on:{
           START: 'startGrill',
         }
